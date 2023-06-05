@@ -6,8 +6,11 @@ COPY app/ /var/www/html/
 # Installation des dépendances 
 RUN docker-php-ext-install mysqli
 
-# Ajout de la dépendance vers le conteneur MySQL
---link mysql-container:mysql
+# Configuration des variables d'environnement pour la connexion à la base de données
+ENV DB_HOST=$DB_HOST
+ENV DB_NAME$DB_NAME
+ENV DB_USER=$DB_USER
+ENV DB_PASSWORD=$DB_PASSWORD
 
 # Port 80 pour accéder à l'application
 EXPOSE 80
