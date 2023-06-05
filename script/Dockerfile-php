@@ -1,0 +1,13 @@
+FROM php:7.4-apache
+
+# Copie des fichiers PHP vers le répertoire du serveur Apache
+COPY app/ /var/www/html/
+
+# Installation des dépendances 
+RUN docker-php-ext-install mysqli
+
+# Ajout de la dépendance vers le conteneur MySQL
+--link mysql-container:mysql
+
+# Port 80 pour accéder à l'application
+EXPOSE 80

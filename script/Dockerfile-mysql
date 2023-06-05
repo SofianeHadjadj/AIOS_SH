@@ -1,0 +1,14 @@
+FROM mysql:latest
+
+# Définition des variables d'environnement pour la configuration MySQL
+ENV MYSQL_DATABASE BananesExport
+ENV MYSQL_ROOT_PASSWORD MyBananaPassword
+
+# Copie du fichier SQL de création de la base de données dans le conteneur
+COPY schema.sql /docker-entrypoint-initdb.d/
+
+# Copiez le fichier SQL de création de la base de données dans le conteneur
+COPY schema.sql /docker-entrypoint-initdb.d/
+
+# Exposition du port MySQL (par défaut : 3306)
+EXPOSE 3306

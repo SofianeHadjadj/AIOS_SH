@@ -39,4 +39,4 @@ mysql -u $DB_USER -p$DB_PASSWORD BananesExport < schema.sql
 git clone https://gitlab.com/aios-sh/BananesExport.git
 
 # Déplacement des fichiers PHP vers le répertoire app
-mv BananesExport/Deploy/app/* app/
+mv BananesExport/Deploy/app/* /var/www/html/

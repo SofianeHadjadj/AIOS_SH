@@ -39,4 +39,3 @@ L'application BananesExport a été déployée dans un conteneur Docker.
 ### Notes
 
 - Assurez-vous d'avoir Docker installé et configuré correctement sur votre machine si vous choisissez le mode Docker.
-- Si vous choisissez le mode Machine, assurez-vous que les dépendances requises (PHP, Apache, MySQL, etc.) sont déjà installées sur votre machine.
