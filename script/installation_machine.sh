@@ -1,28 +1,42 @@
 #!/bin/bash
 
-# Étape 1 : Récupération du code source depuis GitLab
+# Mise à jour du système
+sudo apt update
+sudo apt upgrade -y
+
+# Installation du serveur web Apache
+sudo apt install apache2 -y
+
+# Installation de PHP 7 et des extensions requises
+sudo apt install php7.4 libapache2-mod-php7.4 php7.4-mysql php7.4-curl php7.4-gd php7.4-mbstring php7.4-xml -y
+
+# Installation du serveur de base de données MySQL
+sudo apt install mysql-server -y
+
+# Configuration de la base de données MySQL
+sudo mysql_secure_installation
+
+# Activation des modules Apache nécessaires pour PHP
+sudo a2enmod php7.4
+sudo service apache2 restart
+
+# Création de la base de données
+mysql -u root -p -e "CREATE DATABASE BananesExport;"
+
+# Création de l'utilisateur et attribution des droits sur la base de données
+mysql -u root -p -e "CREATE USER '$DB_USER'@'$DB_HOST' IDENTIFIED BY '$DB_PASSWORD';"
+mysql -u root -p -e "GRANT ALL PRIVILEGES ON BananesExport.* TO '$DB_USER'@'$DB_HOST';"
+mysql -u root -p -e "FLUSH PRIVILEGES;"
+
+echo "La base de données 'BananesExport' a été créée avec succès."
+echo "L'utilisateur '$DB_USER' a été créé avec les droits sur la base de données."
+
+# Création automatisée du schéma de base de données MySQL
+mysql -u $DB_USER -p$DB_PASSWORD -e "CREATE DATABASE BananesExport;"
+mysql -u $DB_USER -p$DB_PASSWORD BananesExport < schema.sql
+
+# Récupération du code source depuis GitLab
 git clone https://gitlab.com/aios-sh/BananesExport.git
 
-# Étape 2 : Déplacement des fichiers PHP vers le répertoire app
+# Déplacement des fichiers PHP vers le répertoire app
 mv BananesExport/Deploy/app/* app/
-
-# Étape 3 : Création automatisée du schéma de base de données MySQL
-mysql -u <nom_utilisateur> -p<mot_de_passe> -e "CREATE DATABASE BananesExport;"
-mysql -u <nom_utilisateur> -p<mot_de_passe> BananesExport < schema.sql
-
-# Étape 4 : Installation du serveur de présentation basé sur PHP (Apache)
-apt-get update
-apt-get install apache2
-
-# Étape 5 : Installation de la base de données MySQL
-apt-get install mysql-server
-
-# Étape 6 : Exposition des informations de connexion à l'application PHP
-export DB_HOST=$DB_HOST
-export DB_NAME=BananesExport
-export DB_USER=$DB_USER
-export DB_PASSWORD=$DB_PASSWORD
-
-# Étape 7 : Vérification du déploiement
-systemctl start apache2
-curl localhost:80/AIOS_SH

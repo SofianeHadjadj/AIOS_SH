@@ -11,7 +11,7 @@ COPY schema.sql /docker-entrypoint-initdb.d/
 
 # Configurez les variables d'environnement pour la connexion à la base de données
 ENV DB_HOST=$DB_HOST
-ENV DB_NAME BananesExport
+ENV DB_NAME$DB_NAME
 ENV DB_USER=$DB_USER
 ENV DB_PASSWORD=$DB_PASSWORD
 
