@@ -12,5 +12,8 @@ ENV DB_NAME$DB_NAME
 ENV DB_USER=$DB_USER
 ENV DB_PASSWORD=$DB_PASSWORD
 
+# Ajout de la dépendance vers le conteneur MySQL
+--link mysql-container:mysql
+
 # Port 80 pour accéder à l'application
 EXPOSE 80
